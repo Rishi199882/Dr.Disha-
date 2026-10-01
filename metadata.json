@@ -1,0 +1,6 @@
+{
+  "name": "Dr. Disha Clinical Nutrition & Dietetics",
+  "description": "Comprehensive clinical nutritionist platform featuring integrated appointment booking, culinary recipe blog, HIPAA-compliant patient portal, progress tracking, automated reminders, EMI plans, and payment gateway by Dr. Disha.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
