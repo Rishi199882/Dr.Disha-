@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,9 +16,6 @@ concurrency:
 
 jobs:
   build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -35,14 +32,21 @@ jobs:
       - name: Build Static Applet
         run: npm run build
 
-      - name: Setup GitHub Pages
-        uses: actions/configure-pages@v4
+      # Method 1: Zero-configuration branch deployment (Pushes build to gh-pages branch)
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
 
+      # Method 2: Direct GitHub Actions Pages Deployment (If Pages source is set to GitHub Actions)
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
+        continue-on-error: true
         with:
           path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
