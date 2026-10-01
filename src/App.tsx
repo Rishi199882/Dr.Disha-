@@ -9,6 +9,7 @@ import { MedicalRecords } from './components/MedicalRecords';
 import { EmailReminders } from './components/EmailReminders';
 import { PaymentGateway } from './components/PaymentGateway';
 import { ClinicalToolsSection } from './components/ClinicalToolsSection';
+import { PatientLogin } from './components/PatientLogin';
 import { Footer } from './components/Footer';
 import { HipaaComplianceModal } from './components/HipaaComplianceModal';
 import { AuditLogModal } from './components/AuditLogModal';
@@ -33,7 +34,8 @@ import {
   PlayCircle,
   Percent,
   Wrench,
-  Megaphone
+  Megaphone,
+  LogIn
 } from 'lucide-react';
 
 export default function App() {
@@ -45,7 +47,7 @@ export default function App() {
   // Hash-based Tab Routing
   const getTabFromHash = () => {
     const hash = window.location.hash.replace('#', '');
-    const validTabs = ['home', 'video', 'booking', 'recipes', 'portal', 'tools', 'ehr', 'reminders', 'pricing'];
+    const validTabs = ['home', 'video', 'booking', 'recipes', 'portal', 'tools', 'ehr', 'reminders', 'pricing', 'login'];
     if (validTabs.includes(hash)) return hash;
     return 'home';
   };
@@ -54,6 +56,7 @@ export default function App() {
   const [patients, setPatients] = useState<PatientProfile[]>(() => StorageService.getPatients());
   const [activePatientId, setActivePatientId] = useState<string>(() => StorageService.getActivePatientId());
   const [activeRole, setActiveRole] = useState<UserRole>(() => StorageService.getActiveRole());
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => StorageService.isPatientLoggedIn());
   
   // Pending booking passed to payment gateway
   const [pendingBooking, setPendingBooking] = useState<BookingAppointment | null>(null);
@@ -89,6 +92,19 @@ export default function App() {
     setActiveRole(role);
   };
 
+  const handleLoginSuccess = (patient: PatientProfile) => {
+    setIsLoggedIn(true);
+    setActivePatientId(patient.id);
+    setPatients(StorageService.getPatients());
+    handleNavigate('portal');
+  };
+
+  const handleLogout = () => {
+    StorageService.logoutPatient();
+    setIsLoggedIn(false);
+    handleNavigate('home');
+  };
+
   const activePatient = patients.find(p => p.id === activePatientId) || patients[0];
 
   const handleOpenPaymentWithBooking = (booking: BookingAppointment) => {
@@ -116,6 +132,9 @@ export default function App() {
           }}
           activeRole={activeRole}
           onRoleChanged={handleRoleChanged}
+          isLoggedIn={isLoggedIn}
+          onOpenLogin={() => handleNavigate('login')}
+          onLogout={handleLogout}
         />
 
         {/* MAIN VIEW AREA */}
@@ -387,12 +406,20 @@ export default function App() {
 
           {/* TAB 5: PATIENT PORTAL FOR PROGRESS TRACKING */}
           {activeTab === 'portal' && (
-            <PatientPortal
-              patient={activePatient}
-              onRefreshData={() => {
-                setPatients(StorageService.getPatients());
-              }}
-            />
+            isLoggedIn ? (
+              <PatientPortal
+                patient={activePatient}
+                onRefreshData={() => {
+                  setPatients(StorageService.getPatients());
+                }}
+              />
+            ) : (
+              <PatientLogin
+                onLoginSuccess={handleLoginSuccess}
+                onNavigateHome={() => handleNavigate('home')}
+                targetTabName="Patient Progress Portal & Biometrics"
+              />
+            )
           )}
 
           {/* TAB 6: CLINICAL TOOLS & FASTING TRACKER */}
@@ -404,9 +431,17 @@ export default function App() {
 
           {/* TAB 7: EHR & LABS */}
           {activeTab === 'ehr' && (
-            <MedicalRecords
-              patient={activePatient}
-            />
+            isLoggedIn ? (
+              <MedicalRecords
+                patient={activePatient}
+              />
+            ) : (
+              <PatientLogin
+                onLoginSuccess={handleLoginSuccess}
+                onNavigateHome={() => handleNavigate('home')}
+                targetTabName="Electronic Health Records (EHR) & Labs"
+              />
+            )
           )}
 
           {/* TAB 8: AUTOMATED REMINDERS & BROADCAST STUDIO */}
@@ -421,6 +456,14 @@ export default function App() {
               onPaymentSuccess={() => {
                 setPendingBooking(null);
               }}
+            />
+          )}
+
+          {/* TAB 10: PATIENT LOGIN */}
+          {activeTab === 'login' && (
+            <PatientLogin
+              onLoginSuccess={handleLoginSuccess}
+              onNavigateHome={() => handleNavigate('home')}
             />
           )}
 

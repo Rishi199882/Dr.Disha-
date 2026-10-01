@@ -30,7 +30,12 @@ jobs:
         run: npm install
 
       - name: Build Static Applet
-        run: npm run build
+        run: |
+          npm run build
+          touch dist/.nojekyll
+          if [ -f CNAME ]; then cp CNAME dist/CNAME; fi
+          if [ -f public/CNAME ]; then cp public/CNAME dist/CNAME; fi
+          if [ -f public/404.html ]; then cp public/404.html dist/404.html; fi
 
       # Method 1: Zero-configuration branch deployment (Pushes build to gh-pages branch)
       - name: Deploy to gh-pages branch

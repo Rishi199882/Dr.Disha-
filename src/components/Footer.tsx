@@ -1,6 +1,6 @@
 import React from 'react';
 import { CLINICAL_PROVIDER } from '../data/mockData';
-import { ShieldCheck, Heart, PlayCircle, Wrench, Percent } from 'lucide-react';
+import { ShieldCheck, Heart, PlayCircle, Wrench, Percent, LogIn } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
@@ -70,6 +70,12 @@ export const Footer: React.FC<FooterProps> = ({
               Patient Portal & Resources
             </h4>
             <ul className="space-y-1.5 text-[11px]">
+              <li>
+                <button onClick={() => onNavigate('login')} className="hover:text-stone-900 transition-colors flex items-center gap-1 text-emerald-800 font-semibold">
+                  <LogIn className="w-3 h-3" />
+                  <span>Patient Portal Sign In</span>
+                </button>
+              </li>
               <li>
                 <button onClick={() => onNavigate('video')} className="hover:text-stone-900 transition-colors flex items-center gap-1 text-emerald-800 font-medium">
                   <PlayCircle className="w-3 h-3" />

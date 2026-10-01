@@ -56,25 +56,35 @@ const KEYS = {
   SECURITY_PIN: 'nutri_security_pin_v2',
   IS_LOCKED: 'nutri_is_locked_v2',
   ENCRYPTION_ENABLED: 'nutri_encryption_enabled_v2',
-  CIPHER_CACHE: 'nutri_cipher_cache_v2'
+  CIPHER_CACHE: 'nutri_cipher_cache_v2',
+  IS_LOGGED_IN: 'nutri_is_logged_in_v2',
+  LOGGED_IN_ID: 'nutri_logged_in_id_v2'
 };
+
+const memoryStore: Record<string, string> = {};
 
 function safeGet<T>(key: string, fallback: T): T {
   try {
-    const item = localStorage.getItem(key);
-    if (!item) return fallback;
+    const item = typeof window !== 'undefined' && window.localStorage ? localStorage.getItem(key) : memoryStore[key];
+    if (!item) return memoryStore[key] ? JSON.parse(memoryStore[key]) as T : fallback;
     return JSON.parse(item) as T;
   } catch (e) {
-    console.warn(`Error reading localStorage key "${key}":`, e);
+    if (memoryStore[key]) {
+      try { return JSON.parse(memoryStore[key]) as T; } catch { return fallback; }
+    }
     return fallback;
   }
 }
 
 function safeSet<T>(key: string, value: T): void {
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    const json = JSON.stringify(value);
+    memoryStore[key] = json;
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(key, json);
+    }
   } catch (e) {
-    console.warn(`Error writing localStorage key "${key}":`, e);
+    console.warn(`Memory fallback used for storage key "${key}":`, e);
   }
 }
 
@@ -95,24 +105,98 @@ function generateSimulatedCiphertext(plaintext: string): { iv: string; salt: str
 export const StorageService = {
   // Initialization
   initDefaults(): void {
-    if (!localStorage.getItem(KEYS.PATIENTS)) safeSet(KEYS.PATIENTS, MOCK_PATIENTS);
-    if (!localStorage.getItem(KEYS.ACTIVE_PATIENT)) safeSet(KEYS.ACTIVE_PATIENT, 'patient-01');
-    if (!localStorage.getItem(KEYS.ACTIVE_ROLE)) safeSet(KEYS.ACTIVE_ROLE, 'patient');
-    if (!localStorage.getItem(KEYS.BIOMETRICS)) safeSet(KEYS.BIOMETRICS, MOCK_BIOMETRIC_LOGS);
-    if (!localStorage.getItem(KEYS.FOOD_LOGS)) safeSet(KEYS.FOOD_LOGS, MOCK_FOOD_LOGS);
-    if (!localStorage.getItem(KEYS.HYDRATION)) safeSet(KEYS.HYDRATION, MOCK_HYDRATION);
-    if (!localStorage.getItem(KEYS.SUPPLEMENTS)) safeSet(KEYS.SUPPLEMENTS, MOCK_SUPPLEMENTS);
-    if (!localStorage.getItem(KEYS.SYMPTOMS)) safeSet(KEYS.SYMPTOMS, MOCK_SYMPTOMS);
-    if (!localStorage.getItem(KEYS.SOAP_NOTES)) safeSet(KEYS.SOAP_NOTES, MOCK_SOAP_NOTES);
-    if (!localStorage.getItem(KEYS.LABS)) safeSet(KEYS.LABS, MOCK_LAB_REPORTS);
-    if (!localStorage.getItem(KEYS.RECIPES)) safeSet(KEYS.RECIPES, MOCK_RECIPES);
-    if (!localStorage.getItem(KEYS.REMINDERS)) safeSet(KEYS.REMINDERS, MOCK_EMAIL_REMINDERS);
-    if (!localStorage.getItem(KEYS.CAMPAIGNS)) safeSet(KEYS.CAMPAIGNS, MOCK_CAMPAIGNS);
-    if (!localStorage.getItem(KEYS.EMI_CONTRACTS)) safeSet(KEYS.EMI_CONTRACTS, MOCK_EMI_CONTRACTS);
-    if (!localStorage.getItem(KEYS.INVOICES)) safeSet(KEYS.INVOICES, MOCK_INVOICES);
-    if (!localStorage.getItem(KEYS.AUDIT_LOGS)) safeSet(KEYS.AUDIT_LOGS, MOCK_AUDIT_LOGS);
-    if (!localStorage.getItem(KEYS.SECURITY_PIN)) safeSet(KEYS.SECURITY_PIN, '1234');
-    if (!localStorage.getItem(KEYS.ENCRYPTION_ENABLED)) safeSet(KEYS.ENCRYPTION_ENABLED, true);
+    try {
+      if (!safeGet<any>(KEYS.PATIENTS, null)) safeSet(KEYS.PATIENTS, MOCK_PATIENTS);
+      if (!safeGet<any>(KEYS.ACTIVE_PATIENT, null)) safeSet(KEYS.ACTIVE_PATIENT, 'patient-01');
+      if (!safeGet<any>(KEYS.ACTIVE_ROLE, null)) safeSet(KEYS.ACTIVE_ROLE, 'patient');
+      if (!safeGet<any>(KEYS.BIOMETRICS, null)) safeSet(KEYS.BIOMETRICS, MOCK_BIOMETRIC_LOGS);
+      if (!safeGet<any>(KEYS.FOOD_LOGS, null)) safeSet(KEYS.FOOD_LOGS, MOCK_FOOD_LOGS);
+      if (!safeGet<any>(KEYS.HYDRATION, null)) safeSet(KEYS.HYDRATION, MOCK_HYDRATION);
+      if (!safeGet<any>(KEYS.SUPPLEMENTS, null)) safeSet(KEYS.SUPPLEMENTS, MOCK_SUPPLEMENTS);
+      if (!safeGet<any>(KEYS.SYMPTOMS, null)) safeSet(KEYS.SYMPTOMS, MOCK_SYMPTOMS);
+      if (!safeGet<any>(KEYS.SOAP_NOTES, null)) safeSet(KEYS.SOAP_NOTES, MOCK_SOAP_NOTES);
+      if (!safeGet<any>(KEYS.LABS, null)) safeSet(KEYS.LABS, MOCK_LAB_REPORTS);
+      if (!safeGet<any>(KEYS.RECIPES, null)) safeSet(KEYS.RECIPES, MOCK_RECIPES);
+      if (!safeGet<any>(KEYS.REMINDERS, null)) safeSet(KEYS.REMINDERS, MOCK_EMAIL_REMINDERS);
+      if (!safeGet<any>(KEYS.CAMPAIGNS, null)) safeSet(KEYS.CAMPAIGNS, MOCK_CAMPAIGNS);
+      if (!safeGet<any>(KEYS.EMI_CONTRACTS, null)) safeSet(KEYS.EMI_CONTRACTS, MOCK_EMI_CONTRACTS);
+      if (!safeGet<any>(KEYS.INVOICES, null)) safeSet(KEYS.INVOICES, MOCK_INVOICES);
+      if (!safeGet<any>(KEYS.AUDIT_LOGS, null)) safeSet(KEYS.AUDIT_LOGS, MOCK_AUDIT_LOGS);
+      if (!safeGet<any>(KEYS.SECURITY_PIN, null)) safeSet(KEYS.SECURITY_PIN, '1234');
+      if (!safeGet<any>(KEYS.ENCRYPTION_ENABLED, null)) safeSet(KEYS.ENCRYPTION_ENABLED, true);
+      // Default initial login state for immediate smooth demo experience
+      if (safeGet<any>(KEYS.IS_LOGGED_IN, null) === null) {
+        safeSet(KEYS.IS_LOGGED_IN, true);
+        safeSet(KEYS.LOGGED_IN_ID, 'patient-01');
+      }
+    } catch (e) {
+      console.warn('StorageService.initDefaults fallback triggered:', e);
+    }
+  },
+
+  // Patient Authentication & Session
+  isPatientLoggedIn(): boolean {
+    return safeGet<boolean>(KEYS.IS_LOGGED_IN, false);
+  },
+
+  getLoggedInPatientId(): string | null {
+    return safeGet<string | null>(KEYS.LOGGED_IN_ID, null);
+  },
+
+  loginPatient(patientId: string): PatientProfile | null {
+    const patients = this.getPatients();
+    const patient = patients.find(p => p.id === patientId) || patients[0];
+    if (patient) {
+      safeSet(KEYS.IS_LOGGED_IN, true);
+      safeSet(KEYS.LOGGED_IN_ID, patient.id);
+      safeSet(KEYS.ACTIVE_PATIENT, patient.id);
+      this.addAuditLog(patient.fullName, 'LOGIN_PORTAL', `/patient/login/session-established`);
+      return patient;
+    }
+    return null;
+  },
+
+  logoutPatient(): void {
+    const active = this.getActivePatientId();
+    const patient = this.getPatients().find(p => p.id === active);
+    this.addAuditLog(patient ? patient.fullName : 'Patient', 'LOGOUT_PORTAL', `/patient/logout`);
+    safeSet(KEYS.IS_LOGGED_IN, false);
+    safeSet(KEYS.LOGGED_IN_ID, null);
+  },
+
+  registerPatient(data: {
+    fullName: string;
+    email: string;
+    phone: string;
+    dob: string;
+    gender: 'Female' | 'Male' | 'Non-Binary' | 'Other';
+    clinicalFocus?: string;
+  }): PatientProfile {
+    const patients = this.getPatients();
+    const randomSuffix = Math.floor(10000 + Math.random() * 90000);
+    const newPatient: PatientProfile = {
+      id: `patient-${Date.now()}`,
+      fullName: data.fullName,
+      email: data.email,
+      phone: data.phone,
+      dob: data.dob,
+      gender: data.gender,
+      clinicalFocus: data.clinicalFocus || 'Comprehensive Functional Dietetics & Nutrition',
+      mrn: `MRN-${randomSuffix}-CLN`,
+      targetCalories: 2000,
+      targetProteinG: 120,
+      targetCarbsG: 180,
+      targetFatG: 70,
+      targetWaterMl: 2500,
+      hipaaConsentSigned: true,
+      hipaaConsentDate: new Date().toISOString().split('T')[0],
+      signatureDataUrl: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="40"><path d="M10 25 Q 30 10, 60 25 T 110 20" stroke="%23065f46" stroke-width="2" fill="none"/></svg>'
+    };
+    const updated = [...patients, newPatient];
+    safeSet(KEYS.PATIENTS, updated);
+    this.loginPatient(newPatient.id);
+    this.addAuditLog(newPatient.fullName, 'SIGN_CONSENT', `/patient/register/${newPatient.mrn}`);
+    return newPatient;
   },
 
   // Role Management

@@ -283,7 +283,7 @@ export interface AuditLogEntry {
   id: string;
   timestamp: string;
   actor: string;
-  action: 'VIEW_PHI' | 'EDIT_SOAP' | 'EXPORT_EHR' | 'UPDATE_BIOMETRICS' | 'SIGN_CONSENT' | 'ACCESS_LABS' | 'LOGIN_PORTAL' | 'ENCRYPT_AT_REST' | 'DECRYPT_AT_REST' | 'EMI_PROCESSED' | 'NEWSLETTER_SENT' | 'RECIPE_CRUD';
+  action: 'VIEW_PHI' | 'EDIT_SOAP' | 'EXPORT_EHR' | 'UPDATE_BIOMETRICS' | 'SIGN_CONSENT' | 'ACCESS_LABS' | 'LOGIN_PORTAL' | 'LOGOUT_PORTAL' | 'ENCRYPT_AT_REST' | 'DECRYPT_AT_REST' | 'EMI_PROCESSED' | 'NEWSLETTER_SENT' | 'RECIPE_CRUD';
   resource: string;
   ipAddress: string;
   status: 'SUCCESS' | 'DENIED';
