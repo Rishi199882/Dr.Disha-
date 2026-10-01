@@ -5,13 +5,11 @@ import { ShieldCheck, Heart, PlayCircle, Wrench, Percent } from 'lucide-react';
 interface FooterProps {
   onNavigate: (tab: string) => void;
   onOpenHipaa: () => void;
-  onOpenDeployHelper: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigate,
-  onOpenHipaa,
-  onOpenDeployHelper
+  onOpenHipaa
 }) => {
   return (
     <footer className="bg-white border-t border-stone-200 mt-20 text-xs text-stone-600">
@@ -110,14 +108,6 @@ export const Footer: React.FC<FooterProps> = ({
               Phone: {CLINICAL_PROVIDER.clinicPhone}<br />
               Secure Email: {CLINICAL_PROVIDER.clinicEmail}
             </p>
-            <div className="pt-1">
-              <button
-                onClick={onOpenDeployHelper}
-                className="text-[10px] text-emerald-800 hover:underline font-semibold"
-              >
-                GitHub Pages Deploy Guide &rarr;
-              </button>
-            </div>
           </div>
 
         </div>

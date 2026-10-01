@@ -1,4 +1,4 @@
-# Elena Vance Clinical Nutrition & Dietetics
+# Dr. Disha Clinical Nutrition & Dietetics
 
 A comprehensive, production-grade clinical nutritionist web platform engineered with **React 19**, **TypeScript**, and **Tailwind CSS 4**. Designed for clinical dietetics practices, functional medicine nutritionists, and telehealth consultations.
 
@@ -7,9 +7,11 @@ A comprehensive, production-grade clinical nutritionist web platform engineered 
 ## 🌟 Key Features (35+ Production Capabilities)
 
 ### 1. Clinical Branding & Editorial Homepage
-- **Credentials & Certifications**: Showcases Dr. Elena Vance's credentials (MS Columbia Univ, RDN, CDN, IFMCP, Board Certified Specialist).
+- **Credentials & Certifications**: Showcases Dr. Disha's credentials (MS Columbia Univ, RDN, CDN, IFMCP, Board Certified Specialist).
 - **Quantified Clinical Proof**: Documented remission rates (94.2% pre-diabetes euglycemia at 12 weeks, 88.6% IBS/SIBO relief).
 - **Care Modalities**: Advanced metabolomics, 4-R gut barrier restoration, and longevity dietetics.
+- **Educational Lifestyle Video**: High-definition video player explaining why a healthy lifestyle is foundational to cellular health and longevity.
+- **Flexible 0% EMI Installments**: Care package financing options with real-time monthly payment calculators and repayment schedules.
 
 ### 2. Integrated Consultation Booking System
 - **Clinical Modality Catalog**: 6 distinct consultation types (Comprehensive Initial Assessment 75m, Gut Protocol 60m, Metabolic Tuning 60m, Sports Nutrition 50m, Follow-Up 45m, Pediatric Nutrition 60m) with billing CPT codes (97802 / 97803).

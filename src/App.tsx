@@ -13,7 +13,6 @@ import { Footer } from './components/Footer';
 import { HipaaComplianceModal } from './components/HipaaComplianceModal';
 import { AuditLogModal } from './components/AuditLogModal';
 import { MacroCalculatorModal } from './components/MacroCalculatorModal';
-import { GitHubDeployHelper } from './components/GitHubDeployHelper';
 import { LockScreenModal } from './components/LockScreenModal';
 import { ErrorBoundary } from './components/ErrorBoundary';
 
@@ -63,7 +62,6 @@ export default function App() {
   const [showHipaaModal, setShowHipaaModal] = useState(false);
   const [showAuditLogs, setShowAuditLogs] = useState(false);
   const [showMacroCalc, setShowMacroCalc] = useState(false);
-  const [showDeployHelper, setShowDeployHelper] = useState(false);
   const [isLocked, setIsLocked] = useState<boolean>(() => StorageService.isSecurityLocked());
 
   // Listen for hash changes
@@ -112,7 +110,6 @@ export default function App() {
           onOpenMacroCalc={() => setShowMacroCalc(true)}
           onOpenHipaaModal={() => setShowHipaaModal(true)}
           onOpenAuditLogs={() => setShowAuditLogs(true)}
-          onOpenDeployHelper={() => setShowDeployHelper(true)}
           onLockScreen={() => {
             StorageService.setSecurityLocked(true);
             setIsLocked(true);
@@ -433,7 +430,6 @@ export default function App() {
         <Footer
           onNavigate={handleNavigate}
           onOpenHipaa={() => setShowHipaaModal(true)}
-          onOpenDeployHelper={() => setShowDeployHelper(true)}
         />
 
         {/* MODALS */}
@@ -457,11 +453,6 @@ export default function App() {
           onTargetUpdated={() => {
             setPatients(StorageService.getPatients());
           }}
-        />
-
-        <GitHubDeployHelper
-          isOpen={showDeployHelper}
-          onClose={() => setShowDeployHelper(false)}
         />
 
         <LockScreenModal

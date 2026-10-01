@@ -11,7 +11,6 @@ import {
   X, 
   Calculator,
   Bell,
-  Github,
   PlayCircle,
   Wrench,
   Percent
@@ -28,7 +27,6 @@ interface NavbarProps {
   onOpenMacroCalc: () => void;
   onOpenHipaaModal: () => void;
   onOpenAuditLogs: () => void;
-  onOpenDeployHelper: () => void;
   onLockScreen: () => void;
   activeRole: UserRole;
   onRoleChanged: (role: UserRole) => void;
@@ -43,7 +41,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenMacroCalc,
   onOpenHipaaModal,
   onOpenAuditLogs,
-  onOpenDeployHelper,
   onLockScreen,
   activeRole,
   onRoleChanged
@@ -158,16 +155,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Calculator className="w-4 h-4" />
             </button>
 
-            {/* GitHub Deploy Readiness Helper */}
-            <button
-              onClick={onOpenDeployHelper}
-              title="GitHub Repository & Pages Deploy Guide (No Blank Screen)"
-              className="p-2 text-stone-600 hover:text-emerald-800 hover:bg-stone-200/50 rounded-lg transition-colors flex items-center gap-1.5 text-xs font-medium"
-            >
-              <Github className="w-4 h-4" />
-              <span className="hidden xl:inline">Deploy</span>
-            </button>
-
             {/* Role Switcher */}
             <select
               value={activeRole}
@@ -209,13 +196,6 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Mobile Menu Toggle */}
           <div className="flex sm:hidden items-center gap-2">
-            <button
-              onClick={onOpenDeployHelper}
-              title="GitHub Deploy Guide"
-              className="p-2 text-stone-600 rounded-lg"
-            >
-              <Github className="w-4 h-4" />
-            </button>
             <button
               onClick={onLockScreen}
               title="Lock Session"
