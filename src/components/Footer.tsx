@@ -1,6 +1,6 @@
 import React from 'react';
 import { CLINICAL_PROVIDER } from '../data/mockData';
-import { ShieldCheck, Heart, PlayCircle, Wrench, Percent, LogIn } from 'lucide-react';
+import { ShieldCheck, Heart, PlayCircle, Wrench, Percent, LogIn, Mail, MapPin, Phone, Calendar } from 'lucide-react';
 
 interface FooterProps {
   onNavigate: (tab: string) => void;
@@ -19,46 +19,51 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Brand Col */}
           <div className="space-y-3 md:col-span-1">
             <div className="flex items-center gap-2">
-              <span className="w-7 h-7 rounded-lg bg-emerald-800 text-stone-100 flex items-center justify-center font-serif text-sm font-semibold">
+              <span className="w-8 h-8 rounded-xl bg-emerald-800 text-stone-100 flex items-center justify-center font-serif text-base font-bold shadow-xs">
                 D
               </span>
-              <span className="font-serif-display text-base font-semibold text-stone-900">
-                Dr. Disha
+              <span className="font-serif-display text-base font-bold text-stone-900">
+                Dr. Disha Clinical Nutrition
               </span>
             </div>
             <p className="text-[11px] text-stone-500 leading-relaxed">
-              Clinical Nutrition & Functional Medicine Dietetics. Specialized in metabolic remission, gut microbiome restoration, and precision biomarker medicine. Flexible EMI plans available.
+              Personalized medical nutrition therapy & functional dietetics. Specializing in metabolic health, gut-barrier restoration, and bio-individual meal design.
             </p>
             <div className="text-[10px] text-stone-400 font-mono-numbers">
-              NPI: {CLINICAL_PROVIDER.npi} · Tax ID: {CLINICAL_PROVIDER.taxId}
+              NPI: {CLINICAL_PROVIDER.npi} · NY CDN: {CLINICAL_PROVIDER.licenseNumber}
             </div>
           </div>
 
-          {/* Clinical Navigation */}
+          {/* Practice Navigation */}
           <div className="space-y-2">
             <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[10px]">
-              Clinical Services
+              Practice & Methods
             </h4>
             <ul className="space-y-1.5 text-[11px]">
               <li>
-                <button onClick={() => onNavigate('booking')} className="hover:text-stone-900 transition-colors">
-                  Initial Clinical Assessment
+                <button onClick={() => onNavigate('home')} className="hover:text-emerald-800 transition-colors cursor-pointer">
+                  Practice Home
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('booking')} className="hover:text-stone-900 transition-colors">
-                  Gut Microbiome Protocol
+                <button onClick={() => onNavigate('about')} className="hover:text-emerald-800 transition-colors cursor-pointer">
+                  About Dr. Disha
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('booking')} className="hover:text-stone-900 transition-colors">
-                  Metabolic & CGM Tuning
+                <button onClick={() => onNavigate('specialties')} className="hover:text-emerald-800 transition-colors cursor-pointer">
+                  Clinical Specialties
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('pricing')} className="hover:text-stone-900 transition-colors flex items-center gap-1">
+                <button onClick={() => onNavigate('approach')} className="hover:text-emerald-800 transition-colors cursor-pointer">
+                  Our 4-Step Care Method
+                </button>
+              </li>
+              <li>
+                <button onClick={() => onNavigate('pricing')} className="hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer">
                   <Percent className="w-3 h-3 text-emerald-800" />
-                  <span>Flexible 0% EMI Installments</span>
+                  <span>Insurance & 0% EMI</span>
                 </button>
               </li>
             </ul>
@@ -67,42 +72,42 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Patient Portal & Resources */}
           <div className="space-y-2">
             <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[10px]">
-              Patient Portal & Resources
+              Patient Care & Portal
             </h4>
             <ul className="space-y-1.5 text-[11px]">
               <li>
-                <button onClick={() => onNavigate('login')} className="hover:text-stone-900 transition-colors flex items-center gap-1 text-emerald-800 font-semibold">
-                  <LogIn className="w-3 h-3" />
+                <button onClick={() => onNavigate('login')} className="hover:text-emerald-800 transition-colors flex items-center gap-1 text-emerald-900 font-semibold cursor-pointer">
+                  <LogIn className="w-3 h-3 text-emerald-800" />
                   <span>Patient Portal Sign In</span>
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('video')} className="hover:text-stone-900 transition-colors flex items-center gap-1 text-emerald-800 font-medium">
-                  <PlayCircle className="w-3 h-3" />
-                  <span>Lifestyle Importance Video</span>
+                <button onClick={() => onNavigate('video')} className="hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer">
+                  <PlayCircle className="w-3 h-3 text-emerald-800" />
+                  <span>Lifestyle Video Orientation</span>
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('tools')} className="hover:text-stone-900 transition-colors flex items-center gap-1">
-                  <Wrench className="w-3 h-3" />
-                  <span>Drug-Nutrient & Fasting Tools</span>
+                <button onClick={() => onNavigate('recipes')} className="hover:text-emerald-800 transition-colors cursor-pointer">
+                  Therapeutic Recipe Blog
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('recipes')} className="hover:text-stone-900 transition-colors">
-                  Dr. Disha Clinical Recipes
+                <button onClick={() => onNavigate('tools')} className="hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer">
+                  <Wrench className="w-3 h-3 text-emerald-800" />
+                  <span>Clinical Fasting & Macro Tools</span>
                 </button>
               </li>
               <li>
-                <button onClick={onOpenHipaa} className="hover:text-stone-900 transition-colors flex items-center gap-1">
+                <button onClick={onOpenHipaa} className="hover:text-emerald-800 transition-colors flex items-center gap-1 cursor-pointer">
                   <ShieldCheck className="w-3 h-3 text-emerald-800" />
-                  <span>HIPAA 256-Bit Vault & NPP</span>
+                  <span>HIPAA Notice of Privacy Practices</span>
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Location & Contact */}
+          {/* Consultation & Contact */}
           <div className="space-y-2">
             <h4 className="font-semibold text-stone-900 uppercase tracking-wider text-[10px]">
               Consultation Clinic
@@ -114,6 +119,14 @@ export const Footer: React.FC<FooterProps> = ({
               Phone: {CLINICAL_PROVIDER.clinicPhone}<br />
               Secure Email: {CLINICAL_PROVIDER.clinicEmail}
             </p>
+            <div className="pt-2">
+              <button
+                onClick={() => onNavigate('contact')}
+                className="text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
+              >
+                <span>Confidential Clinical Inquiry Form &rarr;</span>
+              </button>
+            </div>
           </div>
 
         </div>

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { SpecialtiesSection } from './components/SpecialtiesSection';
+import { ApproachSection } from './components/ApproachSection';
+import { AboutSection } from './components/AboutSection';
+import { ContactSection } from './components/ContactSection';
+import { FaqSection } from './components/FaqSection';
 import { EducationalVideoSection } from './components/EducationalVideoSection';
 import { BookingSystem } from './components/BookingSystem';
 import { RecipeBlog } from './components/RecipeBlog';
@@ -35,7 +40,9 @@ import {
   Percent,
   Wrench,
   Megaphone,
-  LogIn
+  LogIn,
+  CreditCard,
+  Apple
 } from 'lucide-react';
 
 export default function App() {
@@ -47,7 +54,22 @@ export default function App() {
   // Hash-based Tab Routing
   const getTabFromHash = () => {
     const hash = window.location.hash.replace('#', '');
-    const validTabs = ['home', 'video', 'booking', 'recipes', 'portal', 'tools', 'ehr', 'reminders', 'pricing', 'login'];
+    const validTabs = [
+      'home', 
+      'about', 
+      'specialties', 
+      'approach', 
+      'recipes', 
+      'video', 
+      'booking', 
+      'pricing', 
+      'contact', 
+      'portal', 
+      'tools', 
+      'ehr', 
+      'reminders', 
+      'login'
+    ];
     if (validTabs.includes(hash)) return hash;
     return 'home';
   };
@@ -140,7 +162,7 @@ export default function App() {
         {/* MAIN VIEW AREA */}
         <main className="flex-1">
           
-          {/* TAB 1: HOME */}
+          {/* TAB 1: HOME (Comprehensive Culina Health-Inspired Clinical Landing Page) */}
           {activeTab === 'home' && (
             <div>
               {/* Hero Section */}
@@ -149,252 +171,223 @@ export default function App() {
                 onSelectConsultation={(id) => handleNavigate('booking')}
               />
 
-              {/* Educational Video Preview Teaser Strip */}
-              <section className="bg-stone-900 text-stone-100 py-12 px-4 sm:px-6 lg:px-8 border-b border-stone-800">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
-                  <div className="space-y-1.5 max-w-2xl">
-                    <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
-                      Featured Educational Orientation
-                    </span>
-                    <h3 className="font-serif-display text-2xl font-bold text-white">
-                      Why a Healthy Lifestyle Truly Matters: 6-Minute Orientation with Dr. Disha
-                    </h3>
-                    <p className="text-xs text-stone-400 leading-relaxed">
-                      Discover why chronic 3 PM fatigue and metabolic resistance aren&apos;t personal failures—they are cellular signaling errors you can reverse with targeted nutrition.
-                    </p>
-                  </div>
-
-                  <button
-                    onClick={() => handleNavigate('video')}
-                    className="px-6 py-3 text-xs font-semibold text-emerald-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md flex items-center gap-2 shrink-0 cursor-pointer"
-                  >
-                    <PlayCircle className="w-4 h-4 text-emerald-900" />
-                    <span>Watch Free Orientation Video</span>
-                  </button>
-                </div>
-              </section>
-
-              {/* Clinical Philosophy & Modalities */}
-              <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="max-w-3xl mb-12">
-                  <div className="text-xs font-semibold uppercase tracking-wider text-emerald-800 mb-1">
-                    Biochemical Foundations
-                  </div>
-                  <h2 className="font-serif-display text-3xl sm:text-4xl text-stone-900 tracking-tight">
-                    Evidence-Based Clinical Nutrition Modalities
-                  </h2>
-                  <p className="text-sm text-stone-600 mt-2">
-                    Every patient protocol is individualized by Dr. Disha according to metabolomics, continuous glucose trends, and GI microbiome dysbiosis markers.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  {/* Modality 1 */}
-                  <div className="bg-white rounded-2xl border border-stone-200 p-8 space-y-4 shadow-xs">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
-                      <Activity className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-serif-display text-xl font-bold text-stone-900">
-                      Metabolic & CGM Optimization
-                    </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      Continuous glucose monitor (CGM) sensor telemetry coupled with targeted bio-individual carbohydrate timing. Normalized fasting glucose under 99 mg/dL and reversed HbA1c in 94% of pre-diabetic patients.
-                    </p>
-                    <div className="pt-2">
-                      <button
-                        onClick={() => handleNavigate('booking')}
-                        className="text-xs font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>Schedule Assessment</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Modality 2 */}
-                  <div className="bg-white rounded-2xl border border-stone-200 p-8 space-y-4 shadow-xs">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
-                      <HeartPulse className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-serif-display text-xl font-bold text-stone-900">
-                      4-R Gut Barrier Restoration
-                    </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      Targeted protocol for IBS, SIBO, leaky gut, and food intolerances. Remove dietary triggers, Replace digestive enzymes, Re-inoculate beneficial bifidobacteria, and Repair the epithelial mucin layer.
-                    </p>
-                    <div className="pt-2">
-                      <button
-                        onClick={() => handleNavigate('recipes')}
-                        className="text-xs font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>View Low-FODMAP Recipes</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Modality 3 */}
-                  <div className="bg-white rounded-2xl border border-stone-200 p-8 space-y-4 shadow-xs">
-                    <div className="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center">
-                      <Percent className="w-6 h-6" />
-                    </div>
-                    <h3 className="font-serif-display text-xl font-bold text-stone-900">
-                      Flexible 0% EMI Installments
-                    </h3>
-                    <p className="text-xs text-stone-600 leading-relaxed">
-                      Split comprehensive clinical programs into 3, 6, 9, or 12 monthly payments with 0% APR on 3-month tenures. Full insurance superbills provided for out-of-network reimbursement.
-                    </p>
-                    <div className="pt-2">
-                      <button
-                        onClick={() => handleNavigate('pricing')}
-                        className="text-xs font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
-                      >
-                        <span>Calculate Monthly EMI</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* Featured Recipes Preview Strip */}
-              <section className="bg-stone-100/60 border-t border-b border-stone-200 py-16">
+              {/* 4-Step Care Experience Teaser Strip */}
+              <section className="bg-white py-16 border-b border-stone-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                     <div>
-                      <div className="text-xs font-semibold uppercase tracking-wider text-emerald-800 mb-1">
-                        Therapeutic Nutrition in Practice
+                      <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200/60 mb-2">
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>The Care Journey</span>
                       </div>
-                      <h2 className="font-serif-display text-3xl text-stone-900 tracking-tight">
-                        Featured Dr. Disha Recipes
+                      <h2 className="font-serif-display text-3xl sm:text-4xl text-stone-900 tracking-tight">
+                        How Nutrition Care Works with Dr. Disha
                       </h2>
                     </div>
                     <button
-                      onClick={() => handleNavigate('recipes')}
-                      className="text-xs font-semibold text-emerald-800 hover:underline flex items-center gap-1 cursor-pointer"
+                      onClick={() => handleNavigate('approach')}
+                      className="text-xs sm:text-sm font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
                     >
-                      <span>Explore all therapeutic recipes with cooking mode & admin editor</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>Explore the Complete 4-Step Care Method</span>
+                      <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {MOCK_RECIPES.slice(0, 3).map(recipe => (
-                      <div
-                        key={recipe.id}
-                        onClick={() => handleNavigate('recipes')}
-                        className="cursor-pointer bg-white rounded-2xl border border-stone-200 p-6 space-y-4 hover:shadow-md transition-all flex flex-col justify-between"
-                      >
-                        <div className="space-y-2">
-                          <div className="text-xs uppercase font-semibold text-emerald-800">
-                            {recipe.tags[0]} · {recipe.mealType} · {recipe.glycemicLoad} GL
-                          </div>
-                          <h3 className="font-serif-display text-lg font-bold text-stone-900">
-                            {recipe.title}
-                          </h3>
-                          <p className="text-xs text-stone-500 line-clamp-2">
-                            {recipe.subtitle}
-                          </p>
-                        </div>
-
-                        <div className="pt-4 border-t border-stone-100 flex items-center justify-between text-xs font-mono-numbers">
-                          <span className="text-stone-700 font-bold">{recipe.calories} kcal</span>
-                          <span className="text-emerald-800 font-semibold">{recipe.protein}g protein</span>
-                          <span className="text-stone-500">{recipe.carbs}g carbs</span>
-                        </div>
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                    {[
+                      {
+                        num: '01',
+                        title: 'Comprehensive Intake & Labs',
+                        desc: 'Deep audit of your 10-year metabolic history, recent blood panels, medication depletions, and daily routine.'
+                      },
+                      {
+                        num: '02',
+                        title: 'Bio-Individual Strategy',
+                        desc: 'Customized daily protein, fiber, fat & carbohydrate targets aligned with your cellular biomarkers and culture.'
+                      },
+                      {
+                        num: '03',
+                        title: 'Continuous Telehealth Guidance',
+                        desc: 'Regular 1-on-1 video reviews, continuous glucose telemetry adjustments, and personalized food diary feedback.'
+                      },
+                      {
+                        num: '04',
+                        title: 'Lifelong Sustained Vitality',
+                        desc: 'Empowering self-efficacy, intuitive metabolic flexibility, and joyful food freedom without restrictive diets.'
+                      }
+                    ].map((step, idx) => (
+                      <div key={idx} className="bg-stone-50 rounded-2xl border border-stone-200/80 p-5 space-y-2 hover:border-emerald-700/60 transition-colors">
+                        <span className="font-mono-numbers text-xl font-bold text-emerald-800/40">
+                          {step.num}
+                        </span>
+                        <h3 className="font-serif-display text-base font-bold text-stone-900">
+                          {step.title}
+                        </h3>
+                        <p className="text-xs text-stone-600 leading-relaxed">
+                          {step.desc}
+                        </p>
                       </div>
                     ))}
                   </div>
                 </div>
               </section>
 
-              {/* Patient Remission Proof Testimonial Cohort */}
-              <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <div className="bg-white rounded-3xl border border-stone-200 p-8 sm:p-12 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  <div className="lg:col-span-8 space-y-4">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-emerald-800">
-                      Verified Clinical Case Outcome
+              {/* Specialties & Clinical Conditions Preview */}
+              <SpecialtiesSection
+                onBookConsult={(id) => handleNavigate('booking')}
+              />
+
+              {/* Educational Video Preview Strip */}
+              <section className="bg-stone-900 text-stone-100 py-14 px-4 sm:px-6 lg:px-8 border-b border-stone-800">
+                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+                  <div className="space-y-2 max-w-2xl">
+                    <span className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
+                      Featured Educational Clinical Orientation
                     </span>
-                    <blockquote className="font-serif-display text-xl sm:text-2xl text-stone-900 leading-relaxed italic">
-                      &ldquo;When I started with Dr. Disha, my fasting blood glucose was 114 mg/dL and I had debilitating 3 PM brain fog. Within 6 weeks of her anti-inflammatory protocol and continuous glucose insights, my glucose normalized to 92 mg/dL and my repeat HbA1c dropped from 5.9% to 5.4%. I have my energy and life back.&rdquo;
-                    </blockquote>
-                    <div className="text-xs text-stone-600">
-                      <strong className="text-stone-900 block font-semibold">Sarah Jenkins, 42</strong>
-                      <span>Pre-diabetes Remission Cohort · Patient MRN-83921-MET</span>
-                    </div>
+                    <h3 className="font-serif-display text-2xl sm:text-3xl font-bold text-white">
+                      Why a Healthy Lifestyle Truly Matters: 6-Minute Orientation with Dr. Disha
+                    </h3>
+                    <p className="text-xs sm:text-sm text-stone-400 leading-relaxed">
+                      Discover why chronic 3 PM fatigue and metabolic resistance aren&apos;t personal failures—they are cellular signaling errors you can reverse with targeted nutrition.
+                    </p>
                   </div>
 
-                  <div className="lg:col-span-4 bg-stone-50 p-6 rounded-2xl border border-stone-200/80 space-y-3 font-mono-numbers text-xs">
-                    <div className="text-stone-400 font-sans uppercase text-[10px] tracking-wider font-semibold">
-                      Measured Clinical Outcomes (12 Wks)
-                    </div>
-                    <div className="flex justify-between border-b border-stone-200 pb-2">
-                      <span className="text-stone-600">Baseline HbA1c:</span>
-                      <span className="text-rose-700 font-bold">5.9% (Elevated)</span>
-                    </div>
-                    <div className="flex justify-between border-b border-stone-200 pb-2">
-                      <span className="text-stone-600">Post-Protocol HbA1c:</span>
-                      <span className="text-emerald-800 font-bold">5.4% (Optimal)</span>
-                    </div>
-                    <div className="flex justify-between border-b border-stone-200 pb-2">
-                      <span className="text-stone-600">Fasting Glucose:</span>
-                      <span className="text-emerald-800 font-bold">114 &rarr; 92 mg/dL</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-stone-600">Body Adiposity:</span>
-                      <span className="text-emerald-800 font-bold">-8.9 lbs Visceral</span>
+                  <button
+                    onClick={() => handleNavigate('video')}
+                    className="px-6 py-3.5 text-xs sm:text-sm font-semibold text-emerald-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md flex items-center gap-2 shrink-0 cursor-pointer"
+                  >
+                    <PlayCircle className="w-4 h-4 text-emerald-900" />
+                    <span>Watch Full 6-Min Orientation</span>
+                  </button>
+                </div>
+              </section>
+
+              {/* Insurance, Superbills & 0% EMI Overview Strip (Culina Health Style) */}
+              <section className="bg-white py-16 border-b border-stone-200">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                  <div className="bg-gradient-to-tr from-stone-50 to-emerald-50/40 rounded-3xl border border-stone-200 p-8 sm:p-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                      
+                      <div className="lg:col-span-7 space-y-4">
+                        <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-800 bg-white px-3 py-1 rounded-full border border-emerald-200 shadow-2xs">
+                          <Percent className="w-3.5 h-3.5 text-emerald-800" />
+                          <span>Insurance Reimbursement & Flexible Care</span>
+                        </div>
+                        <h3 className="font-serif-display text-3xl font-bold text-stone-900 tracking-tight">
+                          Accessible, Transparent Nutrition Care
+                        </h3>
+                        <p className="text-sm text-stone-600 leading-relaxed">
+                          We believe high-touch clinical nutrition should never be out of reach. We provide itemized, diagnostic-coded Superbills for out-of-network insurance reimbursement, accept HSA/FSA cards, and offer 0% APR monthly EMI installments.
+                        </p>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 text-xs text-stone-700">
+                          <div className="p-3 bg-white rounded-xl border border-stone-200/80 space-y-1">
+                            <strong className="text-emerald-900 block font-semibold">Insurance Superbills</strong>
+                            <span className="text-[11px] text-stone-500">Standard CPT 97802 / 97803 diagnostic receipts provided.</span>
+                          </div>
+                          <div className="p-3 bg-white rounded-xl border border-stone-200/80 space-y-1">
+                            <strong className="text-emerald-900 block font-semibold">HSA & FSA Eligible</strong>
+                            <span className="text-[11px] text-stone-500">Pay with your pre-tax health savings card directly.</span>
+                          </div>
+                          <div className="p-3 bg-white rounded-xl border border-stone-200/80 space-y-1">
+                            <strong className="text-emerald-900 block font-semibold">0% APR EMI Plans</strong>
+                            <span className="text-[11px] text-stone-500">Split multi-month care packages over 3 to 12 months.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="lg:col-span-5 bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-4">
+                        <h4 className="font-serif-display text-lg font-bold text-stone-900">
+                          Calculate Your 0% EMI Installments
+                        </h4>
+                        <p className="text-xs text-stone-500">
+                          Interested in spreading your clinical package into manageable monthly payments? Check your options with zero credit impact.
+                        </p>
+                        <button
+                          onClick={() => handleNavigate('pricing')}
+                          className="w-full py-3 bg-emerald-800 hover:bg-emerald-900 text-white font-semibold rounded-xl text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                        >
+                          <CreditCard className="w-4 h-4" />
+                          <span>View Insurance Guide & EMI Calculator</span>
+                        </button>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </section>
 
-              {/* Ready to start CTA Banner */}
-              <section className="bg-emerald-900 text-white py-16">
-                <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
-                  <h2 className="font-serif-display text-3xl sm:text-4xl font-bold">
-                    Take command of your metabolic and cellular vitality.
+              {/* FAQ Section */}
+              <FaqSection
+                onBookClick={() => handleNavigate('booking')}
+              />
+
+              {/* Final Booking Call-to-Action Strip */}
+              <section className="bg-gradient-to-r from-emerald-900 to-teal-950 py-16 px-4 sm:px-6 lg:px-8 text-white">
+                <div className="max-w-4xl mx-auto text-center space-y-5">
+                  <span className="text-xs uppercase font-bold tracking-wider text-emerald-300">
+                    Take the Next Step Towards Sustained Vitality
+                  </span>
+                  <h2 className="font-serif-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+                    Ready for Clinical Nutrition That Actually Works for Your Life?
                   </h2>
-                  <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
-                    Book your comprehensive 75-minute clinical intake assessment with Dr. Disha today. Telehealth video appointments available across 38 states with flexible 0% EMI plans.
+                  <p className="text-sm sm:text-base text-stone-300 max-w-2xl mx-auto leading-relaxed">
+                    Schedule your initial 75-minute clinical nutrition assessment with Dr. Disha today. Receive a personalized metabolic roadmap, continuous support, and compassionate guidance.
                   </p>
-                  <div className="pt-2 flex flex-wrap justify-center gap-4">
+                  <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-4">
                     <button
                       onClick={() => handleNavigate('booking')}
-                      className="px-6 py-3 text-xs font-semibold text-emerald-950 bg-stone-100 hover:bg-white rounded-xl shadow-md transition-colors cursor-pointer"
+                      className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-stone-100 text-emerald-950 font-bold rounded-xl text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      Book Initial Clinical Assessment ($245)
+                      <Calendar className="w-4 h-4 text-emerald-800" />
+                      <span>Book Initial Assessment</span>
                     </button>
                     <button
-                      onClick={() => handleNavigate('video')}
-                      className="px-6 py-3 text-xs font-semibold text-white bg-emerald-800 hover:bg-emerald-700 rounded-xl transition-colors border border-emerald-700 flex items-center gap-1.5 cursor-pointer"
+                      onClick={() => handleNavigate('contact')}
+                      className="w-full sm:w-auto px-6 py-3.5 bg-emerald-800/80 hover:bg-emerald-800 text-white font-semibold rounded-xl text-sm border border-emerald-700/80 transition-all cursor-pointer"
                     >
-                      <PlayCircle className="w-4 h-4" />
-                      <span>Watch Lifestyle Video</span>
+                      Have Questions? Contact Us
                     </button>
+                  </div>
+                  <div className="text-[11px] text-emerald-200/80 pt-2 flex items-center justify-center gap-2">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+                    <span>HIPAA Compliant · Telehealth Available Across Licensed States</span>
                   </div>
                 </div>
               </section>
+
             </div>
           )}
 
-          {/* TAB 2: EDUCATIONAL LIFESTYLE VIDEO */}
-          {activeTab === 'video' && (
-            <EducationalVideoSection
-              onBookConsultation={() => handleNavigate('booking')}
+          {/* TAB 2: ABOUT DR. DISHA */}
+          {activeTab === 'about' && (
+            <AboutSection
+              onBookClick={() => handleNavigate('booking')}
             />
           )}
 
-          {/* TAB 3: CONSULTATION BOOKING SYSTEM */}
-          {activeTab === 'booking' && (
-            <BookingSystem
-              onBookingSuccess={(booking) => {
-                setPendingBooking(booking);
-              }}
-              onOpenPayment={handleOpenPaymentWithBooking}
+          {/* TAB 3: SPECIALTIES & CONDITIONS */}
+          {activeTab === 'specialties' && (
+            <SpecialtiesSection
+              onBookConsult={(id) => handleNavigate('booking')}
             />
           )}
 
-          {/* TAB 4: RECIPE BLOG WITH ADMIN CRUD */}
+          {/* TAB 4: OUR 4-STEP CARE METHOD */}
+          {activeTab === 'approach' && (
+            <ApproachSection
+              onBookClick={() => handleNavigate('booking')}
+            />
+          )}
+
+          {/* TAB 5: CONTACT & CLINICAL INQUIRY */}
+          {activeTab === 'contact' && (
+            <ContactSection
+              onBookClick={() => handleNavigate('booking')}
+            />
+          )}
+
+          {/* TAB 6: THERAPEUTIC RECIPE BLOG */}
           {activeTab === 'recipes' && (
             <RecipeBlog
               isAdmin={activeRole === 'admin'}
@@ -404,7 +397,32 @@ export default function App() {
             />
           )}
 
-          {/* TAB 5: PATIENT PORTAL FOR PROGRESS TRACKING */}
+          {/* TAB 7: EDUCATIONAL VIDEO ORIENTATION */}
+          {activeTab === 'video' && (
+            <EducationalVideoSection
+              onBookConsultation={() => handleNavigate('booking')}
+            />
+          )}
+
+          {/* TAB 8: APPOINTMENT BOOKING SYSTEM */}
+          {activeTab === 'booking' && (
+            <BookingSystem
+              onOpenPayment={handleOpenPaymentWithBooking}
+              onBookingSuccess={handleOpenPaymentWithBooking}
+            />
+          )}
+
+          {/* TAB 9: INSURANCE, PRICING & 0% EMI GATEWAY */}
+          {activeTab === 'pricing' && (
+            <PaymentGateway
+              initialBooking={pendingBooking}
+              onPaymentSuccess={() => {
+                setPendingBooking(null);
+              }}
+            />
+          )}
+
+          {/* TAB 10: PATIENT PORTAL (AUTHENTICATED DASHBOARD) */}
           {activeTab === 'portal' && (
             isLoggedIn ? (
               <PatientPortal
@@ -412,6 +430,7 @@ export default function App() {
                 onRefreshData={() => {
                   setPatients(StorageService.getPatients());
                 }}
+                onNavigateToTab={handleNavigate}
               />
             ) : (
               <PatientLogin
@@ -422,14 +441,14 @@ export default function App() {
             )
           )}
 
-          {/* TAB 6: CLINICAL TOOLS & FASTING TRACKER */}
+          {/* TAB 11: CLINICAL TOOLS & FASTING CALCULATOR */}
           {activeTab === 'tools' && (
             <ClinicalToolsSection
               activePatient={activePatient}
             />
           )}
 
-          {/* TAB 7: EHR & LABS */}
+          {/* TAB 12: EHR & MEDICAL LAB RECORDS */}
           {activeTab === 'ehr' && (
             isLoggedIn ? (
               <MedicalRecords
@@ -444,22 +463,12 @@ export default function App() {
             )
           )}
 
-          {/* TAB 8: AUTOMATED REMINDERS & BROADCAST STUDIO */}
+          {/* TAB 13: REMINDERS & BROADCAST STUDIO */}
           {activeTab === 'reminders' && (
             <EmailReminders />
           )}
 
-          {/* TAB 9: PAYMENT GATEWAY & EMI INSTALLMENTS */}
-          {activeTab === 'pricing' && (
-            <PaymentGateway
-              initialBooking={pendingBooking}
-              onPaymentSuccess={() => {
-                setPendingBooking(null);
-              }}
-            />
-          )}
-
-          {/* TAB 10: PATIENT LOGIN */}
+          {/* TAB 14: PATIENT SIGN IN & ACTIVATION */}
           {activeTab === 'login' && (
             <PatientLogin
               onLoginSuccess={handleLoginSuccess}
