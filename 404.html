@@ -5,22 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dr. Disha Clinical Nutrition & Dietetics</title>
     <script>
-      // Single Page App redirect for GitHub Pages
+      // Single Page App redirect for GitHub Pages (supporting both custom domains and repo subpaths)
       (function() {
-        var path = window.location.pathname;
-        var search = window.location.search;
-        var hash = window.location.hash;
-        // Redirect to base path preserving hash
-        var segments = path.split('/').filter(Boolean);
-        var redirectUrl = './' + (hash || (segments.length ? '#' + segments[segments.length - 1] : ''));
-        window.location.replace(redirectUrl);
+        var l = window.location;
+        var isGithubIo = l.hostname.indexOf('github.io') > -1;
+        var pathSegments = l.pathname.split('/').filter(Boolean);
+        var repoName = (isGithubIo && pathSegments.length > 0) ? '/' + pathSegments[0] : '';
+        var subPath = pathSegments.slice(isGithubIo ? 1 : 0).join('/');
+        var redirectHash = l.hash || (subPath ? '#' + subPath : '');
+        var targetUrl = l.protocol + '//' + l.host + repoName + '/' + (l.search || '') + redirectHash;
+        l.replace(targetUrl);
       })();
     </script>
   </head>
   <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fafaf9; color: #1c1917; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
-    <div style="text-align: center; padding: 20px;">
-      <h2 style="font-size: 20px; font-weight: 600; color: #065f46; margin-bottom: 8px;">Dr. Disha Clinical Nutrition & Dietetics</h2>
-      <p style="font-size: 14px; color: #78716c;">Redirecting to your clinical practice portal...</p>
+    <div style="text-align: center; padding: 24px;">
+      <h2 style="font-size: 18px; font-weight: 600; color: #065f46; margin-bottom: 8px;">Dr. Disha Clinical Nutrition & Dietetics</h2>
+      <p style="font-size: 14px; color: #78716c;">Redirecting to your clinical portal...</p>
     </div>
   </body>
 </html>
